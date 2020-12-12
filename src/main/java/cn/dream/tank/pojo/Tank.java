@@ -1,5 +1,6 @@
 package cn.dream.tank.pojo;
 
+import cn.dream.tank.TankFrame;
 import cn.dream.tank.constant.Dir;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +14,9 @@ import java.awt.*;
  * @description
  * @date 2020/12/10
  **/
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Tank {
 
     private static final int SPEED = 5;
@@ -25,9 +29,15 @@ public class Tank {
 
     private boolean moving = false;
 
+    private TankFrame tankFrame;
+
 
     public void paint(Graphics g) {
+        Color color = g.getColor();
+        g.setColor(Color.CYAN);
         g.fillRect(x, y, 50, 50);
+        g.setColor(color);
+
         move();
     }// paint
 
@@ -43,50 +53,8 @@ public class Tank {
     }// move
 
 
-    public Tank() {
-    }
-
-    public Tank(int x, int y, Dir dir, boolean moving) {
-        this.x = x;
-        this.y = y;
-        this.dir = dir;
-        this.moving = moving;
-    }
-
-    public static int getSPEED() {
-        return SPEED;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public Dir getDir() {
-        return dir;
-    }
-
-    public void setDir(Dir dir) {
-        this.dir = dir;
-    }
-
-    public boolean isMoving() {
-        return moving;
-    }
-
-    public void setMoving(boolean moving) {
-        this.moving = moving;
+    public void fire() {
+        tankFrame.setBullet(new Bullet(this.x , this.y, this.dir));
     }
 }// class
 

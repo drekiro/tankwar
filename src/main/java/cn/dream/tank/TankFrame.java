@@ -3,6 +3,7 @@ package cn.dream.tank;
 import cn.dream.tank.constant.Dir;
 import cn.dream.tank.pojo.Bullet;
 import cn.dream.tank.pojo.Tank;
+import lombok.*;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -16,14 +17,22 @@ import java.awt.event.WindowEvent;
  * @description
  * @date 2020/12/6
  **/
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TankFrame extends Frame {
 
-    private final Tank myTank = new Tank(200, 200, Dir.DOWN, false);
+    private final static int FRAME_WIDTH = 800, FRAME_HEIGHT = 600;
 
-    private final Bullet bullet = new Bullet(300, 300, Dir.DOWN);
+    private final Tank myTank = new Tank(200, 200, Dir.DOWN, false, this);
 
-    public TankFrame() throws HeadlessException {
-        this.setSize(800, 600);
+    private Bullet bullet = new Bullet(300, 300, Dir.DOWN);
+
+    private Image offScreenImage = null;
+
+    {
+        this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setResizable(false);
         this.setTitle("Tank War");
         this.setVisible(true);
@@ -38,8 +47,7 @@ public class TankFrame extends Frame {
 
         // 添加键盘监听
         this.addKeyListener(new MyKeyListener());
-
-    }// TankFrame
+    }// 构造代码块
 
 
     /**
@@ -54,6 +62,27 @@ public class TankFrame extends Frame {
     }// paint
 
 
+    /**
+     * 用来处理屏幕闪烁
+     * @param g
+     */
+    @Override
+    public void update(Graphics g) {
+        if (offScreenImage == null)
+            offScreenImage = this.createImage(FRAME_WIDTH, FRAME_HEIGHT);
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color color = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+        gOffScreen.setColor(color);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0 ,0, null);
+    }// update
+
+
+    /**
+     * 内部类
+     */
     class MyKeyListener extends KeyAdapter {
 
         boolean left = false;
@@ -82,7 +111,8 @@ public class TankFrame extends Frame {
                 case KeyEvent.VK_UP -> up = false;
                 case KeyEvent.VK_RIGHT -> right = false;
                 case KeyEvent.VK_DOWN -> down = false;
-            }
+                case KeyEvent.VK_CONTROL -> myTank.fire();
+            }// switch
             setMainTankDir();
         }
 

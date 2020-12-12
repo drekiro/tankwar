@@ -18,7 +18,7 @@ import java.awt.*;
 @AllArgsConstructor
 public class Bullet {
 
-    private final static int SPEED = 10;
+    private final static int SPEED = 5;
 
     private final static int WIDTH = 10, HEIGHT = 10;
 
