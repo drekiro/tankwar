@@ -1,6 +1,7 @@
 package cn.dream.tank;
 
 import cn.dream.tank.constant.Dir;
+import cn.dream.tank.pojo.Bullet;
 import cn.dream.tank.pojo.Tank;
 
 import java.awt.*;
@@ -17,8 +18,9 @@ import java.awt.event.WindowEvent;
  **/
 public class TankFrame extends Frame {
 
-    Tank myTank = new Tank(200, 200, Dir.DOWN, false);
+    private final Tank myTank = new Tank(200, 200, Dir.DOWN, false);
 
+    private final Bullet bullet = new Bullet(300, 300, Dir.DOWN);
 
     public TankFrame() throws HeadlessException {
         this.setSize(800, 600);
@@ -48,6 +50,7 @@ public class TankFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
+        bullet.paint(g);
     }// paint
 
 
