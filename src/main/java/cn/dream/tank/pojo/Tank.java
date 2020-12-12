@@ -1,7 +1,7 @@
 package cn.dream.tank.pojo;
 
 import cn.dream.tank.TankFrame;
-import cn.dream.tank.constant.Dir;
+import cn.dream.tank.common.Dir;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -54,7 +54,7 @@ public class Tank {
 
 
     public void fire() {
-        tankFrame.setBullet(new Bullet(this.x , this.y, this.dir));
+        tankFrame.getBullets().add(new Bullet(this.x , this.y, this.dir, true, tankFrame));
     }
 }// class
 

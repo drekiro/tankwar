@@ -1,4 +1,4 @@
-package cn.dream.tank.constant;
+package cn.dream.tank.common;
 
 /**
  * @author dream

@@ -1,15 +1,21 @@
 package cn.dream.tank;
 
-import cn.dream.tank.constant.Dir;
+import cn.dream.tank.common.Constant;
+import cn.dream.tank.common.Dir;
 import cn.dream.tank.pojo.Bullet;
 import cn.dream.tank.pojo.Tank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author dream
@@ -23,16 +29,13 @@ import java.awt.event.WindowEvent;
 @AllArgsConstructor
 public class TankFrame extends Frame {
 
-    private final static int FRAME_WIDTH = 800, FRAME_HEIGHT = 600;
-
     private final Tank myTank = new Tank(200, 200, Dir.DOWN, false, this);
 
-    private Bullet bullet = new Bullet(300, 300, Dir.DOWN);
+    private List<Bullet> bullets = new ArrayList<>();
 
-    private Image offScreenImage = null;
 
     {
-        this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        this.setSize(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT);
         this.setResizable(false);
         this.setTitle("Tank War");
         this.setVisible(true);
@@ -57,26 +60,38 @@ public class TankFrame extends Frame {
      */
     @Override
     public void paint(Graphics g) {
+
+        // 0.记录子弹数量
+        Color color = g.getColor();
+        g.setColor(Color.white);
+        g.drawString("子弹的数量：" + bullets.size(), 10, 40);
+        g.setColor(color);
+
+        // 1.画坦克
         myTank.paint(g);
-        bullet.paint(g);
+
+        // 2.画子弹
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
+        }
     }// paint
 
 
     /**
      * 用来处理屏幕闪烁
+     *
      * @param g
      */
     @Override
     public void update(Graphics g) {
-        if (offScreenImage == null)
-            offScreenImage = this.createImage(FRAME_WIDTH, FRAME_HEIGHT);
+        Image offScreenImage = this.createImage(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT);
         Graphics gOffScreen = offScreenImage.getGraphics();
         Color color = gOffScreen.getColor();
         gOffScreen.setColor(Color.BLACK);
-        gOffScreen.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+        gOffScreen.fillRect(0, 0, Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT);
         gOffScreen.setColor(color);
         paint(gOffScreen);
-        g.drawImage(offScreenImage, 0 ,0, null);
+        g.drawImage(offScreenImage, 0, 0, null);
     }// update
 
 
