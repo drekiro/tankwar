@@ -1,5 +1,6 @@
 package cn.dream.tank.pojo;
 
+import cn.dream.tank.ResourceMgr;
 import cn.dream.tank.TankFrame;
 import cn.dream.tank.common.Dir;
 import lombok.AllArgsConstructor;
@@ -29,15 +30,20 @@ public class Tank {
 
     private boolean moving = false;
 
+    public static final int WIDTH = ResourceMgr.tankD.getWidth();
+
+    public static final int HEIGHT = ResourceMgr.tankD.getWidth();
+
     private TankFrame tankFrame;
 
 
     public void paint(Graphics g) {
-        Color color = g.getColor();
-        g.setColor(Color.CYAN);
-        g.fillRect(x, y, 50, 50);
-        g.setColor(color);
-
+        switch (dir) {
+            case LEFT:  g.drawImage(ResourceMgr.tankL, x, y, null);
+            case UP:  g.drawImage(ResourceMgr.tankU, x, y, null);
+            case RIGHT:  g.drawImage(ResourceMgr.tankR, x, y, null);
+            case DOWN:  g.drawImage(ResourceMgr.tankD, x, y, null);
+        }
         move();
     }// paint
 
@@ -54,7 +60,9 @@ public class Tank {
 
 
     public void fire() {
-        tankFrame.getBullets().add(new Bullet(this.x , this.y, this.dir, true, tankFrame));
+        int bulletX = this.x + Tank.WIDTH / 2 + Bullet.WIDTH / 2;
+        int bulletY = this.y + Tank.HEIGHT / 2 + Bullet.HEIGHT / 2;
+        tankFrame.getBullets().add(new Bullet(bulletX , bulletY, this.dir, true, tankFrame));
     }
 }// class
 

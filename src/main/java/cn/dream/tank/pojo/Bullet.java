@@ -1,5 +1,6 @@
 package cn.dream.tank.pojo;
 
+import cn.dream.tank.ResourceMgr;
 import cn.dream.tank.TankFrame;
 import cn.dream.tank.common.Constant;
 import cn.dream.tank.common.Dir;
@@ -22,7 +23,8 @@ public class Bullet {
 
     private static final int SPEED = 5;
 
-    private static final int WIDTH = 10, HEIGHT = 10;
+    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
+    public static final int HEIGHT = ResourceMgr.bulletD.getWidth();
 
     private int x, y;
 
@@ -39,12 +41,13 @@ public class Bullet {
         if (!live)
             tankFrame.getBullets().remove(this);
 
-        // 2.设置子弹颜色
-        Color color = g.getColor();
-        g.setColor(Color.RED);
-        g.fillOval(x, y, WIDTH, HEIGHT);
-        g.setColor(color);
-
+        // 2.画子弹
+        switch (dir) {
+            case LEFT:  g.drawImage(ResourceMgr.bulletL, x, y, null);
+            case UP:  g.drawImage(ResourceMgr.bulletU, x, y, null);
+            case RIGHT:  g.drawImage(ResourceMgr.bulletR, x, y, null);
+            case DOWN:  g.drawImage(ResourceMgr.bulletD, x, y, null);
+        }
         move();
     }// paint
 

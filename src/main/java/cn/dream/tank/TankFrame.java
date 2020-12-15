@@ -95,6 +95,8 @@ public class TankFrame extends Frame {
     }// update
 
 
+
+
     /**
      * 内部类
      */

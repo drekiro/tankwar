@@ -6,7 +6,7 @@ package cn.dream.tank;
  * @description
  * @date 2020/12/6
  **/
-public class TankApp {
+public class TankMain {
     public static void main(String[] args) throws InterruptedException {
 
         TankFrame tankFrame = new TankFrame();
@@ -15,7 +15,6 @@ public class TankApp {
             Thread.sleep(100);
             tankFrame.repaint();
         }
-
 
     }
 }
