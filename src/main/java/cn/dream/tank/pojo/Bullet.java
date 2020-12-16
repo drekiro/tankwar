@@ -1,6 +1,6 @@
 package cn.dream.tank.pojo;
 
-import cn.dream.tank.ResourceMgr;
+import cn.dream.tank.common.ResourceMgr;
 import cn.dream.tank.TankFrame;
 import cn.dream.tank.common.Constant;
 import cn.dream.tank.common.Dir;
@@ -23,14 +23,11 @@ public class Bullet {
 
     private static final int SPEED = 5;
 
-    public static final int WIDTH = ResourceMgr.bulletD.getWidth();
-    public static final int HEIGHT = ResourceMgr.bulletD.getWidth();
-
     private int x, y;
 
     private Dir dir;
 
-    private Boolean live = true;
+    private Boolean living = true;
 
     private TankFrame tankFrame;
 
@@ -38,7 +35,7 @@ public class Bullet {
     public void paint(Graphics g) {
 
         // 1.删除掉超出屏幕的子弹
-        if (!live)
+        if (!living)
             tankFrame.getBullets().remove(this);
 
         // 2.画子弹
@@ -59,8 +56,20 @@ public class Bullet {
             case DOWN -> y += SPEED;
         }
         if (x < 0 || y < 0 || x > Constant.FRAME_WIDTH || y > Constant.FRAME_HEIGHT)
-            live = false;
+            living = false;
     }// move
 
 
+    public void collideWith(Tank tank) {
+        Rectangle rectBullet = new Rectangle(this.x, this.y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT);
+        Rectangle rectTank = new Rectangle(tank.getX(), tank.getY(), Constant.TANK_WIDTH, Constant.TANK_HEIGHT);
+        if (rectBullet.intersects(rectTank)) {
+            tank.die();
+            this.die();
+        }
+    }
+
+    private void die() {
+        this.living = false;
+    }
 }// class

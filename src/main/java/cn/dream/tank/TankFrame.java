@@ -29,9 +29,11 @@ import java.util.List;
 @AllArgsConstructor
 public class TankFrame extends Frame {
 
-    private final Tank myTank = new Tank(200, 200, Dir.DOWN, false, this);
+    private final Tank myTank = new Tank(200, 200, Dir.DOWN, false, true, this);
 
     private List<Bullet> bullets = new ArrayList<>();
+
+    private List<Tank> tanks = new ArrayList<>();
 
 
     {
@@ -65,14 +67,26 @@ public class TankFrame extends Frame {
         Color color = g.getColor();
         g.setColor(Color.white);
         g.drawString("子弹的数量：" + bullets.size(), 10, 40);
+        g.drawString("敌人的数量：" + tanks.size(), 10, 60);
         g.setColor(color);
 
         // 1.画坦克
         myTank.paint(g);
 
+        for (Tank enemy : tanks) {
+            enemy.paint(g);
+        }
+
         // 2.画子弹
+        for (Bullet bullet : bullets) {
+            bullet.paint(g);
+        }
+
+        // 3.校验坦克碰撞
         for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).paint(g);
+            for (int j = 0; j < tanks.size(); j++) {
+                bullets.get(i).collideWith(tanks.get(j));
+            }
         }
     }// paint
 
@@ -92,6 +106,17 @@ public class TankFrame extends Frame {
         gOffScreen.setColor(color);
         paint(gOffScreen);
         g.drawImage(offScreenImage, 0, 0, null);
+
+        /*if (offScreenImage == null) {
+            offScreenImage = this.createImage(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT);
+        }
+        Graphics gOffScreen = offScreenImage.getGraphics();
+        Color c = gOffScreen.getColor();
+        gOffScreen.setColor(Color.BLACK);
+        gOffScreen.fillRect(0, 0, Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT);
+        gOffScreen.setColor(c);
+        paint(gOffScreen);
+        g.drawImage(offScreenImage, 0, 0, null);*/
     }// update
 
 

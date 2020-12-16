@@ -1,4 +1,4 @@
-package cn.dream.tank;
+package cn.dream.tank.common;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
