@@ -1,6 +1,7 @@
 package cn.dream.tank;
 
 import cn.dream.tank.common.Dir;
+import cn.dream.tank.common.Group;
 import cn.dream.tank.pojo.Tank;
 
 /**
@@ -16,7 +17,7 @@ public class TankMain {
 
         // 初始化地方坦克
         for (int i = 0; i < 5; i++) {
-            tankFrame.getTanks().add(new Tank(50 + i * 80, 400, Dir.DOWN, false, true, tankFrame));
+            tankFrame.getTanks().add(new Tank(50 + i * 80, 400, Dir.DOWN, true, true, Group.BAD, tankFrame));
         }
 
         while (true) {

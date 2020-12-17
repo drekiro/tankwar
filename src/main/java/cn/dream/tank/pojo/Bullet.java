@@ -1,5 +1,6 @@
 package cn.dream.tank.pojo;
 
+import cn.dream.tank.common.Group;
 import cn.dream.tank.common.ResourceMgr;
 import cn.dream.tank.TankFrame;
 import cn.dream.tank.common.Constant;
@@ -28,6 +29,8 @@ public class Bullet {
     private Dir dir;
 
     private Boolean living = true;
+
+    private Group group = Group.BAD;
 
     private TankFrame tankFrame;
 
@@ -61,6 +64,9 @@ public class Bullet {
 
 
     public void collideWith(Tank tank) {
+        if (this.group == tank.getGroup())
+            return;
+        // todo 用一个rect来记录位置
         Rectangle rectBullet = new Rectangle(this.x, this.y, Constant.BULLET_WIDTH, Constant.BULLET_HEIGHT);
         Rectangle rectTank = new Rectangle(tank.getX(), tank.getY(), Constant.TANK_WIDTH, Constant.TANK_HEIGHT);
         if (rectBullet.intersects(rectTank)) {

@@ -2,6 +2,7 @@ package cn.dream.tank;
 
 import cn.dream.tank.common.Constant;
 import cn.dream.tank.common.Dir;
+import cn.dream.tank.common.Group;
 import cn.dream.tank.pojo.Bullet;
 import cn.dream.tank.pojo.Tank;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,7 @@ import java.util.List;
 @AllArgsConstructor
 public class TankFrame extends Frame {
 
-    private final Tank myTank = new Tank(200, 200, Dir.DOWN, false, true, this);
+    private final Tank myTank = new Tank(200, 200, Dir.DOWN, false, true, Group.GOOD, this);
 
     private List<Bullet> bullets = new ArrayList<>();
 
@@ -73,13 +74,13 @@ public class TankFrame extends Frame {
         // 1.画坦克
         myTank.paint(g);
 
-        for (Tank enemy : tanks) {
-            enemy.paint(g);
+        for (int i = 0; i < tanks.size(); i++) {
+            tanks.get(i).paint(g);
         }
 
         // 2.画子弹
-        for (Bullet bullet : bullets) {
-            bullet.paint(g);
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
         }
 
         // 3.校验坦克碰撞

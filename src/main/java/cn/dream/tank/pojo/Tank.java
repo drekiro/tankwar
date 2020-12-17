@@ -1,14 +1,16 @@
 package cn.dream.tank.pojo;
 
-import cn.dream.tank.common.Constant;
-import cn.dream.tank.common.ResourceMgr;
 import cn.dream.tank.TankFrame;
+import cn.dream.tank.common.Constant;
 import cn.dream.tank.common.Dir;
+import cn.dream.tank.common.Group;
+import cn.dream.tank.common.ResourceMgr;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @author dream
@@ -32,6 +34,8 @@ public class Tank {
     private boolean moving = false;
 
     private boolean living = true;
+
+    private Group group;
 
     private TankFrame tankFrame;
 
@@ -58,13 +62,16 @@ public class Tank {
             case RIGHT -> x += SPEED;
             case DOWN -> y += SPEED;
         }
+
+        if (new Random().nextInt(10) > 8)
+            this.fire();
     }// move
 
 
     public void fire() {
         int bulletX = this.x + Constant.TANK_WIDTH / 2 + Constant.BULLET_WIDTH / 2;
         int bulletY = this.y + Constant.BULLET_HEIGHT / 2 + Constant.BULLET_HEIGHT / 2;
-        tankFrame.getBullets().add(new Bullet(bulletX , bulletY, this.dir, true, tankFrame));
+        tankFrame.getBullets().add(new Bullet(bulletX , bulletY, this.dir, true, Group.BAD, tankFrame));
     }
 
     public void die() {
