@@ -1,10 +1,7 @@
 package cn.dream.tank;
 
-import cn.dream.tank.common.Constant;
-import cn.dream.tank.common.Dir;
-import cn.dream.tank.common.Group;
-import cn.dream.tank.pojo.Bullet;
-import cn.dream.tank.pojo.Tank;
+import cn.dream.tank.common.*;
+import cn.dream.tank.pojo.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +33,7 @@ public class TankFrame extends Frame {
 
     private List<Tank> tanks = new ArrayList<>();
 
+   private Explode explode = new Explode(100, 100, true, this);
 
     {
         this.setSize(Constant.FRAME_WIDTH, Constant.FRAME_HEIGHT);
@@ -89,6 +87,8 @@ public class TankFrame extends Frame {
                 bullets.get(i).collideWith(tanks.get(j));
             }
         }
+
+        explode.paint(g);
     }// paint
 
 

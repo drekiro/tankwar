@@ -17,6 +17,7 @@ public class Constant {
     public static final int BULLET_WIDTH = ResourceMgr.bulletD.getWidth();
     public static final int BULLET_HEIGHT = ResourceMgr.bulletD.getHeight();
 
-
+    public static final int EXPLODE_WIDTH = ResourceMgr.explodes[0].getWidth();
+    public static final int EXPLODE_HEIGHT = ResourceMgr.explodes[0].getHeight();
 
 }
